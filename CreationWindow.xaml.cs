@@ -58,11 +58,12 @@ namespace KotoCulator
     {
         private CreationWindowViewModel _creationViewModel;
         private CreationSave _save;
+
+
         public CreationWindow(CreationSave save, Creation creation, ObservableCollection<Material> materials)
         {
             _save = save;
             InitializeComponent();
-  
             _creationViewModel = new CreationWindowViewModel(creation);
 
             ComboboxColumn.ItemsSource = materials;

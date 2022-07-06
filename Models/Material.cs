@@ -1,9 +1,25 @@
 ﻿using System;
 using System.ComponentModel;
+using System.Globalization;
 using System.Runtime.CompilerServices;
+using System.Windows;
+using System.Windows.Data;
 
 namespace KotoCulator
 {
+    public class MaterialConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((Material)value).Name;
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return value;
+        }
+    }
+
     public class Material : INotifyPropertyChanged
     {
         public string Name { get { return _name; } set { _name = value; OnPropertyChanged("Name"); } }

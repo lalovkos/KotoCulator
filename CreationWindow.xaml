@@ -6,6 +6,8 @@
         xmlns:local="clr-namespace:KotoCulator"
         mc:Ignorable="d"
         Title="CreationWindow" Height="300" Width="300">
+    <Window.Resources>
+    </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="30"/>
@@ -18,7 +20,7 @@
         </DockPanel>
         <DataGrid x:Name="MaterialsDataGrid" Grid.Row="1" ItemsSource="{Binding Composition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False" CellEditEnding="MaterialsDataGrid_CellEditEnding">
             <DataGrid.Columns>
-                <DataGridComboBoxColumn x:Name="ComboboxColumn" Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                <DataGridComboBoxColumn x:Name="ComboboxColumn" Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*"/>
                 <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
             </DataGrid.Columns>
         </DataGrid>
