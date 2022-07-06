@@ -1,0 +1,36 @@
+﻿<Window x:Class="KotoCulator.CreationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KotoCulator"
+        mc:Ignorable="d"
+        Title="CreationWindow" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <DockPanel Grid.Row="0" Margin="3" HorizontalAlignment="Left">
+            <TextBox Width="145" Margin="0,0,2,0" Grid.Row="0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+            <TextBox Width="145" Margin="2,0,0,0"  Grid.Row="0" Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Foreground="Red" IsReadOnly="true"/>
+        </DockPanel>
+        <DataGrid x:Name="MaterialsDataGrid" Grid.Row="1" ItemsSource="{Binding Composition, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" CanUserAddRows="True" AutoGenerateColumns="False" CellEditEnding="MaterialsDataGrid_CellEditEnding">
+            <DataGrid.Columns>
+                <DataGridComboBoxColumn x:Name="ComboboxColumn" Header="Material" SelectedItemBinding="{Binding Material, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+                <DataGridTextColumn Header="Quantity" Binding="{Binding Quantity, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Width="*" />
+            </DataGrid.Columns>
+        </DataGrid>
+        <DockPanel Grid.Row="2" Margin="3">
+            <DockPanel  HorizontalAlignment="Left">
+                <Button Width="50" Margin="2" Content="Add" Click="Add_Button_Click" />
+                <Button Width="50" Margin="2" Content="Delete" Click="Delete_Button_Click"/>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Right">
+                <Button Width="50" Margin="2" Content="Ok" Click="Ok_Button_Click"/>
+                <Button Width="50" Margin="2" Content="Cancel" Click="Cancel_Button_Click"/>
+            </DockPanel>
+        </DockPanel>
+    </Grid>
+</Window>

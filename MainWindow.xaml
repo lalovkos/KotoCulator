@@ -1,0 +1,36 @@
+﻿<Window x:Class="KotoCulator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KotoCulator"
+        mc:Ignorable="d"
+        Title="KotoCulator" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="400"/>
+            <ColumnDefinition Width="400"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="30"/>
+        </Grid.RowDefinitions>
+        <DataGrid Grid.Column="0" Grid.Row="0" ItemsSource="{Binding Materials, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMaterial}" >
+        </DataGrid>
+        <DataGrid Grid.Column="1" Grid.Row="0" ItemsSource="{Binding Creations, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedCreation}">
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="Creations_DoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
+        </DataGrid>
+        <DockPanel Grid.Column="0" Grid.Row="1" Margin="2" HorizontalAlignment="Left">
+                <Button Width="50" Margin="2" Content="Add" Click="Add_Material_Button_Click" />
+                <Button Width="50" Margin="2" Content="Delete" Click="Delete_Material_Button_Click"/>
+            </DockPanel>
+        <DockPanel Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left">
+            <Button Width="50" Margin="2" Content="Add" Click="Add_Creation_Button_Click"/>
+            <Button Width="50" Margin="2" Content="Delete" Click="Delete_Creation_Button_Click"/>
+        </DockPanel>
+    </Grid>
+</Window>
