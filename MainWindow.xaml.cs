@@ -1,10 +1,13 @@
-﻿using System;
+﻿using KotoCulator.Input;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -31,18 +34,15 @@ namespace KotoCulator
         public Material SelectedMaterial { get { return _selectedMaterial; } set { _selectedMaterial = value; OnPropertyChanged("SelectedMaterial"); } }
         public Creation SelectedCreation { get { return _selectedCreation; } set { _selectedCreation = value; OnPropertyChanged("SelectedCreation"); } }
 
-        public Material _selectedMaterial;
-        public Creation _selectedCreation;
+        private Material _selectedMaterial;
+        private Creation _selectedCreation;
+        private SaveEditor _saveEditor;
 
         public MainWindowViewModel() 
         {
-            _materials = new ObservableCollection<Material>();
-            _materials.Add(new Material("Epics", 4000, 8000));
-            _materials.Add(new Material("Eyes", 300, 900));
-            _materials.Add(new Material("Dye", 300, 300));
-            _creations = new ObservableCollection<Creation>();
-            _creations.Add(new Creation("Kot1", new ObservableCollection<MaterialConsumption> { new MaterialConsumption(_materials[0], 22), new MaterialConsumption(_materials[1], 33) }));
-
+            _saveEditor = new SaveEditor();
+            ReopenMaterials();
+            ReopenCreations();
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -50,6 +50,26 @@ namespace KotoCulator
         {
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(prop));
+        }
+
+        internal void ReopenMaterials()
+        {
+            Materials = new ObservableCollection<Material>(_saveEditor.LoadMaterials());
+        }
+
+        internal void ReopenCreations()
+        {
+            Creations = new ObservableCollection<Creation>(_saveEditor.LoadCreations());
+        }
+
+        internal void SaveMaterials()
+        {
+            _saveEditor.SaveMaterials(_materials.ToList());
+        }
+
+        internal void SaveCreations()
+        {
+            _saveEditor.SaveCreations(_creations.ToList());
         }
     }
 
@@ -82,25 +102,40 @@ namespace KotoCulator
         private void Add_Material_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Materials.Add(new Material("Name", 0, 1));
-            _viewModel.OnPropertyChanged();
         }
 
         private void Delete_Material_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Materials.Remove(_viewModel.SelectedMaterial);
-            _viewModel.OnPropertyChanged();
         }
 
         private void Add_Creation_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Creations.Add(new Creation("Kot1", new ObservableCollection<MaterialConsumption> { new MaterialConsumption(_viewModel.Materials[0], 22), new MaterialConsumption(_viewModel.Materials[1], 33) }));
-            _viewModel.OnPropertyChanged();
         }
 
         private void Delete_Creation_Button_Click(object sender, RoutedEventArgs e)
         {
             _viewModel.Creations.Remove(_viewModel.SelectedCreation);
-            _viewModel.OnPropertyChanged();
+        }
+
+        private void MenuClickOpenMaterials(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ReopenMaterials();
+        }
+
+        private void MenuClickOpenCreations(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ReopenCreations();
+        }
+        private void MenuClickSaveMaterials(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveMaterials();
+        }
+
+        private void MenuClickSaveCreations(object sender, RoutedEventArgs e)
+        {
+            _viewModel.SaveCreations();
         }
     }
 }
