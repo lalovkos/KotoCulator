@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace KotoCulator.Models
+namespace KotoCulator.Utils
 {
     internal static class Utility
     {
-        internal enum EdIsm 
+        internal enum EdIsm
         {
             gr,
             p,

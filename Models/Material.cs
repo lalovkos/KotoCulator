@@ -5,8 +5,9 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Data;
 
-namespace KotoCulator
+namespace KotoCulator.Models
 {
+
     public class MaterialConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
@@ -20,25 +21,25 @@ namespace KotoCulator
         }
     }
 
-    public class Material : INotifyPropertyChanged
+    public class Material : IMaterial
     {
-        public string Name { get { return _name; } set { _name = value; OnPropertyChanged("Name"); } }
+        public string Name { get { return _name; } set { _name = value; } }
         private string _name;
 
-        public float  Price { get { return _price; } set { _price = value; OnPropertyChanged("Price"); ChangePrice(); } }
+        public float  Price { get { return _price; } set { _price = value; ChangePrice(); } }
         private float _price;
 
-        public float Quantity { get { return _quantity; } set { _quantity = value; OnPropertyChanged("Quantity"); ChangePrice();  } }
+        public float Quantity { get { return _quantity; } set { _quantity = value; ChangePrice();  } }
         private float _quantity;
 
-        public float PricePerOne { get { return _pricePerOne; } set { _pricePerOne = value; OnPropertyChanged("PricePerOne"); } }
+        public float PricePerOne { get { return _pricePerOne; } set { _pricePerOne = value;} }
         private float _pricePerOne;
 
         public Material(string name, float price, float quantity)
         {
-            Name = name;
-            Price = price;
-            Quantity = quantity;
+            _name = name;
+            _price = price;
+            _quantity = quantity;
             ChangePrice();
         }
 
@@ -50,13 +51,6 @@ namespace KotoCulator
         public override string ToString() 
         {
             return Name;
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }

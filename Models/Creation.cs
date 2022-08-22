@@ -4,82 +4,55 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace KotoCulator
+namespace KotoCulator.Models
 {
-    public class Creation : INotifyPropertyChanged
+
+    public class Creation : ICreation
     {
-        public string Name { get { return _name; } set { _name = value; OnPropertyChanged("Name"); } }
+        public string Name { get { return _name; } set { _name = value; } }
         private string _name;
-        public ObservableCollection<MaterialConsumption> Composition 
-        {
-            get 
-            { 
-                return _composition; 
-            } 
-            set 
-            { 
-                _composition = value; 
-                OnPropertyChanged("Composition"); 
-                ChangePrice();
-            } 
-        }
-        private ObservableCollection<MaterialConsumption> _composition;
-        public float Price 
-        { 
-            get 
-            {
-                return _price; 
-            } 
-            set 
-            { 
-                _price = value; 
-                OnPropertyChanged("Price"); 
-            } 
-        }
+
+        private IList<IMaterialConsumption> _composition;
+
+        public float Price { get {return _price; } set {  _price = value; } }
         private float _price;
 
-        public Creation(string name, ObservableCollection<MaterialConsumption> composition) 
+        public Creation(string name, IList<IMaterialConsumption> composition) 
         {
-            Name = name;
-            Composition = new ObservableCollection<MaterialConsumption>();
+            _name = name;
+            _composition = new List<IMaterialConsumption>();
+
             foreach (var comp in composition) 
             {
-                Composition.Add(comp.Copy());
+                _composition.Add(comp.Copy());
             }
             ChangePrice();
         }
 
-        public void ChangePrice() 
+        private void ChangePrice() 
         {
             Price = 0;
-            foreach (var item in Composition) 
+            foreach (var item in _composition) 
             {
                 Price += item.Material.PricePerOne * item.Quantity;
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
+        public ICreation Copy() 
         {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
+            return new Creation(Name, _composition);
         }
 
-        public Creation Copy() 
+        public void AddComposition(IMaterialConsumption materialConsumption)
         {
-            return new Creation(Name, Composition);
+            _composition.Add(materialConsumption);
+            ChangePrice();
         }
 
-        internal void AddComposition(MaterialConsumption materialConsumption)
+        public void RemoveComposition(IMaterialConsumption selectedItem)
         {
-            Composition.Add(materialConsumption);
-            OnPropertyChanged(nameof(Composition));
-        }
-
-        internal void RemoveComposition(MaterialConsumption selectedItem)
-        {
-            Composition.Remove((MaterialConsumption)selectedItem);
-            OnPropertyChanged(nameof(Composition));
+            _composition.Remove(selectedItem);
+            ChangePrice();
         }
 
 

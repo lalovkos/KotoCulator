@@ -1,54 +1,27 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace KotoCulator
+namespace KotoCulator.Models
 {
-    public class MaterialConsumption : INotifyPropertyChanged
-    {
-        public Material Material 
-        { 
-            get 
-            { 
-                return _material; 
-            } 
-            set 
-            { 
-                _material = value; 
-                OnPropertyChanged("Material");
-            } 
-        }
 
-        private Material _material;
-        public float Quantity 
-        { 
-            get 
-            { 
-                return _quantity; 
-            } 
-            set 
-            { 
-                _quantity = value; 
-                OnPropertyChanged("Quantity");
-            } 
-        }
+    public class MaterialConsumption : IMaterialConsumption
+    {
+        public IMaterial Material { get { return _material; } set  {  _material = value; } }
+
+        private IMaterial _material;
+
+        public float Quantity { get { return _quantity; } set { _quantity = value; } }
         private float _quantity;
 
-        public MaterialConsumption(Material material, float quantity)
+        public MaterialConsumption(IMaterial material, float quantity)
         {
             _material = material;
             _quantity = quantity;
         }
 
-        public MaterialConsumption Copy() 
+        public IMaterialConsumption Copy() 
         {
             return new MaterialConsumption(_material, _quantity);
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-        public void OnPropertyChanged([CallerMemberName] string prop = "")
-        {
-            if (PropertyChanged != null)
-                PropertyChanged(this, new PropertyChangedEventArgs(prop));
         }
     }
 }
