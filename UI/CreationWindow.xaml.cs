@@ -1,4 +1,5 @@
-﻿using System;
+﻿using KotoCulator.Models;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -36,14 +37,14 @@ namespace KotoCulator
 
         public CreationWindowViewModel(Creation creation = null)
         {
-            if (creation == null)
-            {
-                Creation = new Creation("Name", new ObservableCollection<MaterialConsumption>());
-            }
-            else 
-            {
-                Creation = creation;
-            }
+            //if (creation == null)
+            //{
+            //    Creation = new Creation("Name", new ObservableCollection<MaterialConsumption>());
+            //}
+            //else 
+            //{
+            //    Creation = creation;
+            //}
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -85,17 +86,17 @@ namespace KotoCulator
 
         private void Add_Button_Click(object sender, RoutedEventArgs e)
         {
-            _creationViewModel.Creation.AddComposition(new MaterialConsumption(new Material("Name", 0, 1), 0));
+            //_creationViewModel.Creation.AddComposition(new MaterialConsumption(new Material("Name", 0, 1), 0));
         }
 
         private void Delete_Button_Click(object sender, RoutedEventArgs e)
         {
-            _creationViewModel.Creation.RemoveComposition((MaterialConsumption)MaterialsDataGrid.SelectedItem);
+            //_creationViewModel.Creation.RemoveComposition((MaterialConsumption)MaterialsDataGrid.SelectedItem);
         }
 
         private void MaterialsDataGrid_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-            _creationViewModel.Creation.ChangePrice();
+            //_creationViewModel.Creation.ChangePrice();
         }
     }
 

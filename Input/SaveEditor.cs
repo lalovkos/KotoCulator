@@ -1,4 +1,5 @@
-﻿using KotoCulator.Utils;
+﻿using KotoCulator.Models;
+using KotoCulator.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
